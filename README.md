@@ -1,15 +1,5 @@
 # XSS_Test
 
-```bash
-██╗░░██╗░██████╗░██████╗████████╗███████╗░██████╗████████╗
-╚██╗██╔╝██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝
-░╚███╔╝░╚█████╗░╚█████╗░░░░██║░░░█████╗░░╚█████╗░░░░██║░░░
-░██╔██╗░░╚═══██╗░╚═══██╗░░░██║░░░██╔══╝░░░╚═══██╗░░░██║░░░
-██╔╝╚██╗██████╔╝██████╔╝░░░██║░░░███████╗██████╔╝░░░██║░░░
-╚═╝░░╚═╝╚═════╝░╚═════╝░░░░╚═╝░░░╚══════╝╚═════╝░░░░╚═╝░░░
-                                                  hum4ng0d
-```
-
 Testing for XSS vulnerability for specific parameter. You can use payload file of your own. 
 
 ![xss_test](xss_test.png)
@@ -29,9 +19,13 @@ Testing for XSS vulnerability for specific parameter. You can use payload file o
 -f: payload file
 ```
 
-### Example:
+### Examples:
 
 ```bash 
-python3 xss_test.py -t "http://example-website.com/post.php" -f xss-payload.txt -p "name" -m GET -H "COOKIES"
+python3 xss_test.py -t "http://example-website.com/post.php" -p "name" -m GET -f xss-payload.txt 
+```
+
+```bash
+python3 xss_test.py -t "http://example-website.com/post.php" -p "name" -m POST -H "COOKIES" -P "<script>alert(1)</script>,<img src=x onerror=prompt(1)>"
 ```
 
