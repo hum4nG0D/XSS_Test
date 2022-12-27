@@ -27,7 +27,6 @@ def printBanner():
 
 def test_xss(url, payload, parameter, method, cookies):
   try:
-    # Send the payload as a parameter in the request body
     if method.lower() == "post":
       r = requests.post(url, data={parameter: payload}, headers={"Cookie": cookies})
     elif method.lower() == "get":
@@ -45,7 +44,6 @@ def test_xss(url, payload, parameter, method, cookies):
 
 def main():
   printBanner()
-  # Parse the command line arguments
   parser = argparse.ArgumentParser()
   parser.add_argument("-t", "--url", required=True, help="the URL to test for XSS vulnerabilities")
   parser.add_argument("-p", "--parameter", required=True, help="the parameter to test for XSS vulnerabilities")
@@ -55,24 +53,18 @@ def main():
   parser.add_argument("-f", "--payloads_file", required=True, help="a file containing payloads to use for testing")
   args = parser.parse_args()
 
-  # Parse the URL
   parsed_url = urlparse(args.url)
-  # Check if the URL is valid
   if parsed_url.scheme == "" or parsed_url.netloc == "":
     print("Error: Invalid URL")
     return
 
-  # Check if the request method is valid
   if args.method.lower() not in ["get", "post"]:
     print("Error: Invalid request method")
     return
 
-  # Test for XSS vulnerabilities
   if args.payloads:
-    # Use the payloads specified by the user
     payloads = args.payloads.split(",")
   elif args.payloads_file:
-    # Read payloads from the specified file
     try:
       with open(args.payloads_file) as f:
         payloads = f.readlines()
@@ -84,7 +76,6 @@ def main():
     print("Error: No payloads specified")
     return
 
-  # Keep track of the number of payloads tested
   counter = 0
   for items in tqdm(payloads):
     payload = urllib.parse.quote_plus(items)
@@ -95,7 +86,6 @@ def main():
 if __name__ == "__main__":
   main()
 
-  # Read results from the log file
   try:
     with open("exploits.log") as f:
       print(f.read())
