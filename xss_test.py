@@ -1,4 +1,5 @@
 import argparse
+import datetime
 import requests
 import urllib.parse
 from bs4 import BeautifulSoup
@@ -25,6 +26,11 @@ def printBanner():
 
     """, "orange"))
 
+current_time = datetime.datetime.now()
+formatted_time = current_time.strftime("%m/%d/%Y %I:%M:%S %p")
+with open('exploits.log', 'a') as f:
+  f.write("\n" + formatted_time + "\n")
+
 def test_xss(url, payload, parameter, method, cookies):
   try:
     if method.lower() == "post":
@@ -43,14 +49,14 @@ def test_xss(url, payload, parameter, method, cookies):
   return False
 
 def main():
-  printBanner()
+  # Parse the command line arguments
   parser = argparse.ArgumentParser()
   parser.add_argument("-t", "--url", required=True, help="the URL to test for XSS vulnerabilities")
-  parser.add_argument("-p", "--parameter", required=True, help="the parameter to test for XSS vulnerabilities")
+  parser.add_argument("-p", "--parameters", required=True, nargs='+', help="the list of parameters to test for XSS vulnerabilities")
   parser.add_argument("-m", "--method", required=True, help="the request method to use (GET or POST)")
-  parser.add_argument("-H", "--cookies", required=False, help="the cookie headers to send with the request")
+  parser.add_argument("-c", "--cookies", required=False, help="the cookie headers to send with the request")
   parser.add_argument("-P", "--payloads", required=False, help="a comma-separated list of payloads to use for testing")
-  parser.add_argument("-f", "--payloads_file", required=True, help="a file containing payloads to use for testing")
+  parser.add_argument("-F", "--payloads_file", required=True, help="a file containing payloads to use for testing")
   args = parser.parse_args()
 
   parsed_url = urlparse(args.url)
@@ -76,11 +82,13 @@ def main():
     print("Error: No payloads specified")
     return
 
-  counter = 0
-  for items in tqdm(payloads):
-    payload = urllib.parse.quote_plus(items)
-    counter += 1
-    test_xss(args.url, payload, args.parameter, args.method, args.cookies)
+  for parameter in args.parameters:
+    print("Testing Parameter: " + parameter)
+    counter = 0
+    for items in tqdm(payloads):
+      payload = urllib.parse.quote_plus(items)
+      counter += 1
+      test_xss(args.url, payload, parameter, args.method, args.cookies)
 
 
 if __name__ == "__main__":

@@ -1,8 +1,6 @@
 # XSS_Test
 
-Testing for XSS vulnerability for specific parameter. You can use payload file of your own. 
-
-![xss_test](xss_test.png)
+Testing for XSS vulnerability for specific parameter(s). You can use payload file of your own with multi-parameters approach.
 
 `python3 -m pip install beautifulsoup4`
 
@@ -12,20 +10,24 @@ Testing for XSS vulnerability for specific parameter. You can use payload file o
 
 ```
 -t: target URL
--p: parameter
+-p: parameter(s)
 -m: method
--H: cookie
+-c: cookie
 -P: comma separated payloads
--f: payload file
+-F: payload file
 ```
 
 ### Examples:
 
 ```bash 
-python3 xss_test.py -t "http://example-website.com/post.php" -p "name" -m GET -f xss-payload.txt 
+python3 xss_test.py -t "http://example-website.com/post.php" -p name -m GET -F xss-payload.txt 
 ```
 
-```bash
-python3 xss_test.py -t "http://example-website.com/post.php" -p "name" -m POST -H "COOKIES" -P "<script>alert(1)</script>,<img src=x onerror=prompt(1)>"
+![xss-test-1param](/xss-test-1param.png)
+
+```py
+python3 xss_test.py -t "http://example-website.com/post.php" -p name user -m GET -c "COOKIES" -P "<script>alert(1)</script>,<img src=x onerror=prompt(1)>"
 ```
+
+![xss-test-2param](/xss-test-2param.png)
 
