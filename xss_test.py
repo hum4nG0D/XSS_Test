@@ -49,7 +49,7 @@ def test_xss(url, payload, parameter, method, cookies):
   return False
 
 def main():
-  # Parse the command line arguments
+  printBanner()
   parser = argparse.ArgumentParser()
   parser.add_argument("-t", "--url", required=True, help="the URL to test for XSS vulnerabilities")
   parser.add_argument("-p", "--parameters", required=True, nargs='+', help="the list of parameters to test for XSS vulnerabilities")
