@@ -8,11 +8,15 @@ You can change the payload identifier for vulnerability checking in the response
 identifier = "INJECTX"
 ```
 
+<br>
+
 ### Requirements
 
 `python3 -m pip install beautifulsoup4`
 
 `python3 -m pip install tqdm`
+
+<br>
 
 ### Usage:
 
@@ -31,19 +35,21 @@ identifier = "INJECTX"
 python3 param-tester.py -t "http://example-website.com/testing/" -p name -m GET -F xss-payload.txt 
 
 python3 param-tester.py -t "http://192.168.11.11:1335/vulnerabilities/xss_r/" -c "PHPSESSID=value; security=low" -m GET -F xss-quick.txt -p name
-
 ```
 
 ![param-tester-get](/param-tester-get.png)
+
+<br>
 
 ```bash
 python3 param-tester.py -t "http://192.168.11.11:1335/vulnerabilities/xss_s/" -c "PHPSESSID=value; security=low" -m POST -F xss-quick.txt -d "txtName=s&mtxMessage=s&btnSign=Sign+Guestbook" -p txtName mtxMessage
 
 python3 param-tester.py -t "http://192.168.11.11:1335/vulnerabilities/xss_s/" -c "PHPSESSID=value; security=low" -m POST -F xss-quick.txt -d "txtName=s&mtxMessage=s&mtxEmail=s&btnSign=Sign+Guestbook" -p txtName mtxMessage mtxEmail
-
 ```
 
 ![param-tester-post](/param-tester-post.png)
+
+<br>
 
 ### Future improvements:
 
