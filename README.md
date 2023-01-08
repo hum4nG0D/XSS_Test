@@ -51,7 +51,8 @@ python3 param-tester.py -t "http://192.168.11.11:1335/vulnerabilities/xss_s/" -c
 
 <br>
 
-### Future improvements:
+### To do:
 
 - Verification of the found vulnerability (XSS, SQLi)
 - Payload generation
+- Add JSON parameter
